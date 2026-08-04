@@ -56,7 +56,12 @@ export function SignIn() {
             </form>
          </FormProvider>
          <div className="flex flex-col gap-2 max-w-87.5 w-full">
-            <Button type="submit" content="Login" variants="default" />
+            <Button
+               form="sign-in-form"
+               type="submit"
+               content="Login"
+               variants="default"
+            />
             <Button
                type="button"
                onClick={() => navigate('/sign-up')}
