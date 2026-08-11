@@ -1,10 +1,11 @@
 import { yupResolver } from '@hookform/resolvers/yup'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 import { Button } from '../../components/Button'
 import { Input } from '../../components/Input'
+import { UserContext } from '../../context/UserContext'
 import { api } from '../../lib/api'
 
 export const signInSchema = yup.object().shape({
@@ -23,6 +24,8 @@ export function SignIn() {
 
   const [loading, setLoading] = useState(false)
 
+  const { setUser } = useContext(UserContext)
+
   const navigate = useNavigate()
 
   async function handleSignInSubmit(data: SignInSchema) {
@@ -34,7 +37,8 @@ export function SignIn() {
         password: data.password,
       })
 
-      console.log(response.data)
+      console.log(response.data.message)
+      navigate('/')
     } catch (error) {
       console.error(error)
     } finally {
