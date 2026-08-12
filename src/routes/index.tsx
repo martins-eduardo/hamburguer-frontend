@@ -8,10 +8,13 @@ import { SignUp } from '../pages/sign-up'
 export function Routes() {
   return (
     <Router>
-      <Route element={<DefaultLayout />}>
-        <Route path="/" element={<Navigate to="/products" />} />
-        <Route path="/products" element={<Products />} />
+      <Route>
+        <Route element={<DefaultLayout />}>
+          <Route path="/" element={<Navigate to="/products" />} />
+          <Route path="/products" element={<Products />} />
+        </Route>
       </Route>
+
       <Route element={<AuthLayout />}>
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/sign-up" element={<SignUp />} />

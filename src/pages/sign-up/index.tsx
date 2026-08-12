@@ -27,7 +27,7 @@ export function SignUp() {
     resolver: yupResolver(signUpSchema),
   })
 
-  const { handleSubmit } = signUpForm
+  const { handleSubmit, reset } = signUpForm
 
   const navigate = useNavigate()
 
@@ -43,6 +43,10 @@ export function SignUp() {
       })
 
       console.log(response.data)
+
+      reset()
+
+      navigate('/sign-in')
     } catch (error) {
       console.error(error)
     } finally {
