@@ -1,10 +1,33 @@
 import { Box, LayoutGrid, LogOut, Plus, ShoppingCart } from 'lucide-react'
-import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { useContext, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { UserContext } from '../../../../context/UserContext'
+import { api } from '../../../../lib/api'
 
 export function Header() {
-  const { user } = useContext(UserContext)
+  const { user, setUser } = useContext(UserContext)
+
+  const location = useLocation()
+
+  async function handleMeSubmit() {
+    try {
+      const response = await api.get('/me')
+
+      setUser(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  async function handleLogoutSubmit() {
+    try {
+      const response = await api.post('/logout')
+
+      setUser(null)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   function getNavItemClass(path: string) {
     const baseClass = 'flex p-1 border border-[#F2DAAC] rounded-sm'
@@ -15,12 +38,16 @@ export function Header() {
     return `${baseClass} text-[#F2DAAC]`
   }
 
+  useEffect(() => {
+    handleMeSubmit()
+  }, [])
+
   return (
     <div className="flex justify-between p-3 items-center w-full md:w-184.25 mx-auto">
       <div className="flex w-full">
         <img src="./hamburguer-logo.png" alt="" />
       </div>
-      {!user ? (
+      {user ? (
         <div className="flex w-full justify-between items-center">
           <div className="flex gap-2 items-center">
             <Link to="/">
@@ -44,9 +71,12 @@ export function Header() {
             </span>
           </div>
           <div className="flex text-white">
-            <span className="text-xl">{user?.name}</span>
+            <span className="text-xl">{user?.name.split(' ')[0]}</span>
           </div>
-          <div className="flex text-white">
+          <div
+            className="flex text-white cursor-pointer"
+            onClick={() => handleLogoutSubmit()}
+          >
             <LogOut />
           </div>
         </div>
