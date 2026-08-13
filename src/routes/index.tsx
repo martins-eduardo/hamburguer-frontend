@@ -4,6 +4,7 @@ import { DefaultLayout } from '../pages/_layouts/default-layout/index'
 import { Products } from '../pages/products'
 import { SignIn } from '../pages/sign-in'
 import { SignUp } from '../pages/sign-up'
+import { Public } from './Public'
 
 export function Routes() {
   return (
@@ -15,9 +16,11 @@ export function Routes() {
         </Route>
       </Route>
 
-      <Route element={<AuthLayout />}>
-        <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/sign-up" element={<SignUp />} />
+      <Route element={<Public />}>
+        <Route element={<AuthLayout />}>
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+        </Route>
       </Route>
     </Router>
   )
