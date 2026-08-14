@@ -76,7 +76,9 @@ export function Header() {
             </span>
           </div>
           <div className="flex text-white">
-            <span className="text-xl">{user?.name.split(' ')[0]}</span>
+            <span className="text-xl">
+              {user?.name?.split(' ')[0] || user?.name}
+            </span>
           </div>
           <div
             className="flex text-white cursor-pointer"

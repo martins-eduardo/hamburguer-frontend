@@ -1,8 +1,11 @@
-import { type ReactNode, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { LoaderCircle } from 'lucide-react'
+import { type ReactNode, useEffect, useState } from 'react'
+import { Outlet, useNavigate } from 'react-router-dom'
 
-export function Public({ children }: { children: ReactNode }) {
+export function Public() {
   const navigate = useNavigate()
+
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const cookie = document.cookie
@@ -16,7 +19,17 @@ export function Public({ children }: { children: ReactNode }) {
         navigate('/', { replace: true })
       }
     }
+
+    setLoading(false)
   }, [navigate])
 
-  return <div>{children}</div>
+  return (
+    <div>
+      {loading === true ? (
+        <LoaderCircle className="animate-spin" />
+      ) : (
+        <Outlet />
+      )}
+    </div>
+  )
 }

@@ -38,6 +38,7 @@ export function SignIn() {
       })
 
       console.log(response.data.message)
+      setUser(response.data)
       navigate('/')
     } catch (error) {
       console.error(error)
