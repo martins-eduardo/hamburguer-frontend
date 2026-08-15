@@ -45,14 +45,14 @@ export function Header() {
   }, [])
 
   return (
-    <div className="flex justify-between p-3 items-center w-full md:w-184.25 mx-auto">
+    <div className="flex justify-between p-3 items-center w-full">
       <div className="flex w-full">
         <img src="./hamburguer-logo.png" alt="" />
       </div>
       {user ? (
         <div className="flex w-full justify-end gap-8 items-center">
           {user.role === 'ADMIN' && (
-            <div className="flex gap-2 items-center">
+            <div className=" gap-2 items-center hidden sm:flex">
               <Link to="/">
                 <div className={getNavItemClass('/products')}>
                   <Box />
