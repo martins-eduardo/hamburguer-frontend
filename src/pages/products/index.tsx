@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import {} from 'react-router-dom'
+import { ItemsProducts } from './components/ItemsProducts'
 
 export function Products() {
   const [category, setCategory] = useState('Hamburguer')
@@ -23,30 +23,42 @@ export function Products() {
   }
 
   return (
-    <div className="flex w-full justify-start items-center gap-4 px-3 md:px-0 my-3 md:my-5">
-      <div
-        className={getCategoryClass('Hamburguer')}
-        onClick={() => {
-          handleChangeCategory('Hamburguer')
-        }}
-      >
-        Hamburguer
+    <div className="flex flex-col w-full justify-center items-start gap-4 px-3 md:px-0 my-3 md:my-5">
+      <div className="flex gap-4">
+        <div
+          className={getCategoryClass('Hamburguer')}
+          onClick={() => {
+            handleChangeCategory('Hamburguer')
+          }}
+        >
+          Hamburguer
+        </div>
+        <div
+          className={getCategoryClass('Bebidas')}
+          onClick={() => {
+            handleChangeCategory('Bebidas')
+          }}
+        >
+          Bebidas
+        </div>
+        <div
+          className={getCategoryClass('Porçoẽs')}
+          onClick={() => {
+            handleChangeCategory('Porçoẽs')
+          }}
+        >
+          Porções
+        </div>
       </div>
-      <div
-        className={getCategoryClass('Drinks')}
-        onClick={() => {
-          handleChangeCategory('Drinks')
-        }}
-      >
-        Bebidas
-      </div>
-      <div
-        className={getCategoryClass('Portion')}
-        onClick={() => {
-          handleChangeCategory('Portion')
-        }}
-      >
-        Porções
+
+      <p className="flex text-lg md:text-xl font-semibold text-[#F2DAAC] uppercase">
+        {category}
+      </p>
+      <div className="flex flex-col gap-6">
+        <ItemsProducts />
+        <ItemsProducts />
+        <ItemsProducts />
+        <ItemsProducts />
       </div>
     </div>
   )
