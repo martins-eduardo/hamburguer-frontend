@@ -1,5 +1,5 @@
 import { LoaderCircle } from 'lucide-react'
-import { type ReactNode, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 export function Public() {

@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes as Router } from 'react-router-dom'
 import { AuthLayout } from '../pages/_layouts/auth-layout/index'
 import { DefaultLayout } from '../pages/_layouts/default-layout/index'
+import { Orders } from '../pages/orders'
 import { Products } from '../pages/products'
 import { SignIn } from '../pages/sign-in'
 import { SignUp } from '../pages/sign-up'
@@ -13,6 +14,7 @@ export function Routes() {
         <Route element={<DefaultLayout />}>
           <Route path="/" element={<Navigate to="/products" />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/orders" element={<Orders />} />
         </Route>
       </Route>
 
