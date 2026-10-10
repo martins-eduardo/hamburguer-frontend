@@ -1,12 +1,25 @@
 import { ShoppingCart } from 'lucide-react'
-import duploDaCasa from '../../../../public/duplo-da-casa.png'
+import type { Product } from '../../../types/Products'
 
-export function ItemsProducts() {
+export function ItemsProducts({
+  id,
+  name,
+  description,
+  price,
+  image,
+  category,
+}: Product) {
+  function formatPrice(priceInCents: number) {
+    return new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    }).format(priceInCents / 100)
+  }
   return (
     <div className="flex gap-4">
       <div className="flex w-25 h-20.75 md:w-50 md:h-41.5 shrink-0">
         <img
-          src={duploDaCasa}
+          src={`./${image}`}
           alt="Duplo Casa"
           className="w-full h-full object-contain"
         />
@@ -14,20 +27,17 @@ export function ItemsProducts() {
       <div className="flex flex-col justify-between">
         <div className="flex flex-col">
           <div className="flex text-white font-semibold text-sm md:text-xl uppercase">
-            Duplo da casa
+            {name}
           </div>
           <div className="flex md:text-lg text-xs text-[#848484]">
-            Dois suculentos hambúrgueres de 120g, queijo cheddar derretido,
-            maionese da casa e picles no pão brioche tostado.
+            {description}
           </div>
         </div>
         <div className="flex gap-3 items-center justify-end">
           <div className="flex font-semibold text-xxs md:text-xl text-[#F2DAAC]">
-            R$28.90
+            {formatPrice(price)}
           </div>
-          <div className="flex text-white">
-            <ShoppingCart size={20} />
-          </div>
+          <div className="flex text-white">{<ShoppingCart size={20} />}</div>
         </div>
       </div>
     </div>

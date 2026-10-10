@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { api } from '../../lib/api'
+import type { Product } from '../../types/Products'
 import { ItemsProducts } from './components/ItemsProducts'
 
 export function Products() {
   const [category, setCategory] = useState('Hamburguer')
+  const [loading, setLoading] = useState(false)
+  const [products, setProducts] = useState<Product[]>()
 
   function handleChangeCategory(newCategory: string) {
     setCategory(newCategory)
@@ -21,6 +25,29 @@ export function Products() {
 
     return categoryNotSelected
   }
+
+  async function getProducts() {
+    try {
+      setLoading(true)
+      const response = await api.get('/products')
+      console.log(response.data)
+      setProducts(response.data)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  const filteredProducts = products?.filter((product) => {
+    return product.category === category
+  })
+
+  console.log(filteredProducts)
+
+  useEffect(() => {
+    getProducts()
+  }, [])
 
   return (
     <div className="flex flex-col w-full justify-center items-start gap-4 px-3 md:px-0 my-3 md:my-5">
@@ -55,10 +82,17 @@ export function Products() {
         {category}
       </p>
       <div className="flex flex-col gap-6">
-        <ItemsProducts />
-        <ItemsProducts />
-        <ItemsProducts />
-        <ItemsProducts />
+        {filteredProducts?.map((product) => (
+          <ItemsProducts
+            key={product.id}
+            id={product.id}
+            name={product.name}
+            description={product.description}
+            price={product.price}
+            image={product.image}
+            category={product.category}
+          />
+        ))}
       </div>
     </div>
   )
