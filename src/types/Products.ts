@@ -5,4 +5,5 @@ export interface Product {
   price: number
   image: string
   category: string
+  setProducts: React.Dispatch<React.SetStateAction<Product[] | undefined>>
 }

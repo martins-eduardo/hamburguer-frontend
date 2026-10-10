@@ -1,4 +1,7 @@
 import { ShoppingCart } from 'lucide-react'
+import { useContext, useState } from 'react'
+import { UserContext } from '../../../context/UserContext'
+import { api } from '../../../lib/api'
 import type { Product } from '../../../types/Products'
 
 export function ItemsProducts({
@@ -8,20 +11,50 @@ export function ItemsProducts({
   price,
   image,
   category,
+  setProducts,
 }: Product) {
+  const { user } = useContext(UserContext)
+  const [loading, setLoading] = useState(false)
+
   function formatPrice(priceInCents: number) {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL',
     }).format(priceInCents / 100)
   }
+
+  async function getProducts() {
+    try {
+      setLoading(true)
+      const response = await api.get('/products')
+
+      setProducts(response.data)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  async function deleteProduct() {
+    try {
+      setLoading(true)
+      const response = await api.delete(`/deleteProduct/${id}`)
+      getProducts()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <div className="flex gap-4">
       <div className="flex w-25 h-20.75 md:w-50 md:h-41.5 shrink-0">
         <img
           src={`./${image}`}
-          alt="Duplo Casa"
-          className="w-full h-full object-contain"
+          alt={`${image}`}
+          className="w-full h-full object-fill rounded-md"
         />
       </div>
       <div className="flex flex-col justify-between">
@@ -34,6 +67,16 @@ export function ItemsProducts({
           </div>
         </div>
         <div className="flex gap-3 items-center justify-end">
+          {user?.role === 'ADMIN' && (
+            <div
+              className="flex text-white font-semibold text-xs md:text-md uppercase bg-red-700 p-1 rounded-md cursor-pointer"
+              onClick={() => {
+                deleteProduct()
+              }}
+            >
+              Deletar
+            </div>
+          )}
           <div className="flex font-semibold text-xxs md:text-xl text-[#F2DAAC]">
             {formatPrice(price)}
           </div>

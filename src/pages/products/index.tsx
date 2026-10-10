@@ -30,7 +30,7 @@ export function Products() {
     try {
       setLoading(true)
       const response = await api.get('/products')
-      console.log(response.data)
+
       setProducts(response.data)
     } catch (error) {
       console.log(error)
@@ -42,8 +42,6 @@ export function Products() {
   const filteredProducts = products?.filter((product) => {
     return product.category === category
   })
-
-  console.log(filteredProducts)
 
   useEffect(() => {
     getProducts()
@@ -91,6 +89,7 @@ export function Products() {
             price={product.price}
             image={product.image}
             category={product.category}
+            setProducts={setProducts}
           />
         ))}
       </div>
