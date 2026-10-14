@@ -1,11 +1,13 @@
 import { Box, LayoutGrid, LogOut, Plus, ShoppingCart } from 'lucide-react'
-import { useContext, useEffect } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { Cart } from '../../../../components/Cart'
 import { UserContext } from '../../../../context/UserContext'
 import { api } from '../../../../lib/api'
 
 export function Header() {
   const { user, setUser } = useContext(UserContext)
+  const [showCart, setShowCart] = useState<boolean>(false)
 
   const navigate = useNavigate()
 
@@ -46,6 +48,7 @@ export function Header() {
 
   return (
     <div className="flex justify-between p-3 items-center w-full">
+      {showCart && <Cart setShowCart={setShowCart} />}
       <div className="flex w-full">
         <img src="./hamburguer-logo.png" alt="" />
       </div>
@@ -70,7 +73,7 @@ export function Header() {
           )}
 
           <div className="relative text-white cursor-pointer">
-            <ShoppingCart />
+            <ShoppingCart onClick={() => setShowCart(!showCart)} />
             <span className="flex absolute -top-3 -right-3 h-4 w-4 items-center justify-center bg-[#F2DAAC] rounded-full text-[#161410] font-bold text-sm">
               1
             </span>
