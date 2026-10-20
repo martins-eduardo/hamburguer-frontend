@@ -2,7 +2,7 @@ import { ShoppingCart } from 'lucide-react'
 import { useContext, useState } from 'react'
 import { UserContext } from '../../../context/UserContext'
 import { api } from '../../../lib/api'
-import type { Product } from '../../../types/Products'
+import type { ProductProps } from '../../../types/Products'
 import { formatPrice } from '../../../utils/formatterPrice'
 
 export function ItemsProducts({
@@ -13,7 +13,7 @@ export function ItemsProducts({
   image,
   category,
   setProducts,
-}: Product) {
+}: ProductProps) {
   const { user } = useContext(UserContext)
   const [loading, setLoading] = useState(false)
   async function getProducts() {
