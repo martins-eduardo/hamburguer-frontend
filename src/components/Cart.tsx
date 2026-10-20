@@ -1,7 +1,12 @@
 import { X } from 'lucide-react'
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
+import {
+  type Dispatch,
+  type SetStateAction,
+  useContext,
+  useEffect,
+} from 'react'
+import { CartItemContext } from '../context/CartItemsContext'
 import { api } from '../lib/api'
-import type { cartItem } from '../types/CartItem'
 import { Button } from './Button'
 import { CartItem } from './CartItem'
 
@@ -10,7 +15,7 @@ interface cartProps {
 }
 
 export function Cart({ setShowCart }: cartProps) {
-  const [cartItems, setCartItems] = useState<cartItem[]>([])
+  const { cartItems, setCartItems } = useContext(CartItemContext)
 
   async function handleCartItems() {
     try {

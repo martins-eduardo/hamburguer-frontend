@@ -2,11 +2,13 @@ import { Box, LayoutGrid, LogOut, Plus, ShoppingCart } from 'lucide-react'
 import { useContext, useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Cart } from '../../../../components/Cart'
+import { CartItemContext } from '../../../../context/CartItemsContext'
 import { UserContext } from '../../../../context/UserContext'
 import { api } from '../../../../lib/api'
 
 export function Header() {
   const { user, setUser } = useContext(UserContext)
+  const { cartItems } = useContext(CartItemContext)
   const [showCart, setShowCart] = useState<boolean>(false)
 
   const navigate = useNavigate()
@@ -75,7 +77,7 @@ export function Header() {
           <div className="relative text-white cursor-pointer">
             <ShoppingCart onClick={() => setShowCart(!showCart)} />
             <span className="flex absolute -top-3 -right-3 h-4 w-4 items-center justify-center bg-[#F2DAAC] rounded-full text-[#161410] font-bold text-sm">
-              1
+              {cartItems.length}
             </span>
           </div>
           <div className="flex text-white">
