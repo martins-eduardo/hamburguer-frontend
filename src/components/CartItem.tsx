@@ -1,18 +1,21 @@
 import { ChevronLeft, ChevronRight, Trash } from 'lucide-react'
+import { formatPrice } from '../utils/formatterPrice'
 
-export function CartItem() {
+interface cartItemProps {
+  title: string
+  price: number
+  image: string
+}
+
+export function CartItem({ title, price, image }: cartItemProps) {
   return (
     <div className="flex gap-3 items-center">
-      <img
-        src="./duplo-da-casa.jpg"
-        alt="Duplo da Casa"
-        className="w-25 rounded-md"
-      />
+      <img src={`./${image}`} alt="Duplo da Casa" className="w-25 rounded-md" />
 
       <div className="flex-1">
-        <p className="uppercase font-bold">Duplo da Casa</p>
-        <p className="font-bold">R$28,90</p>
-        <div className="flex gap-3 mt-1">
+        <p className="uppercase font-bold text-sm">{title}</p>
+        <p className="font-bold text-sm">{formatPrice(price)}</p>
+        <div className="flex gap-3 mt-1 items-center">
           <ChevronLeft
             className="cursor-pointer bg-[#C92A0E] text-white p-1 rounded-md"
             size={25}

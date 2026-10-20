@@ -3,6 +3,7 @@ import { useContext, useState } from 'react'
 import { UserContext } from '../../../context/UserContext'
 import { api } from '../../../lib/api'
 import type { Product } from '../../../types/Products'
+import { formatPrice } from '../../../utils/formatterPrice'
 
 export function ItemsProducts({
   id,
@@ -15,14 +16,6 @@ export function ItemsProducts({
 }: Product) {
   const { user } = useContext(UserContext)
   const [loading, setLoading] = useState(false)
-
-  function formatPrice(priceInCents: number) {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL',
-    }).format(priceInCents / 100)
-  }
-
   async function getProducts() {
     try {
       setLoading(true)
