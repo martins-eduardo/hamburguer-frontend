@@ -1,5 +1,6 @@
 import { ShoppingCart } from 'lucide-react'
 import { useContext, useState } from 'react'
+import { CartItemContext } from '../../../context/CartItemsContext'
 import { UserContext } from '../../../context/UserContext'
 import { api } from '../../../lib/api'
 import type { ProductProps } from '../../../types/Products'
@@ -16,6 +17,20 @@ export function ItemsProducts({
 }: ProductProps) {
   const { user } = useContext(UserContext)
   const [loading, setLoading] = useState(false)
+
+  const { cartItems, setCartItems } = useContext(CartItemContext)
+
+  async function getCartItems() {
+    try {
+      const response = await api.get('/cartItems', {
+        withCredentials: true,
+      })
+      setCartItems(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   async function getProducts() {
     try {
       setLoading(true)
@@ -38,6 +53,20 @@ export function ItemsProducts({
       console.log(error)
     } finally {
       setLoading(false)
+    }
+  }
+
+  async function createCartItem() {
+    try {
+      const response = await api.post('/cartItem', {
+        withCredentials: true,
+        productId: id,
+      })
+
+      if (response.status !== 200) {
+      }
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -73,7 +102,15 @@ export function ItemsProducts({
           <div className="flex font-semibold text-xxs md:text-xl text-[#F2DAAC]">
             {formatPrice(price)}
           </div>
-          <div className="flex text-white">{<ShoppingCart size={20} />}</div>
+          <div className="flex text-white">
+            {
+              <ShoppingCart
+                size={20}
+                className="cursor-pointer"
+                onClick={() => createCartItem()}
+              />
+            }
+          </div>
         </div>
       </div>
     </div>

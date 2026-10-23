@@ -5,9 +5,10 @@ interface cartItemProps {
   title: string
   price: number
   image: string
+  quantity: number
 }
 
-export function CartItem({ title, price, image }: cartItemProps) {
+export function CartItem({ title, price, image, quantity }: cartItemProps) {
   return (
     <div className="flex gap-3 items-center">
       <img src={`./${image}`} alt="Duplo da Casa" className="w-25 rounded-md" />
@@ -20,7 +21,7 @@ export function CartItem({ title, price, image }: cartItemProps) {
             className="cursor-pointer bg-[#C92A0E] text-white p-1 rounded-md"
             size={25}
           />
-          <p className="font-bold">1</p>
+          <p className="font-bold">{quantity}</p>
           <ChevronRight
             className="cursor-pointer bg-[#C92A0E] text-white p-1 rounded-md"
             size={25}

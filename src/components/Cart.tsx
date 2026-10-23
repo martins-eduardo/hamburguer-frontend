@@ -17,7 +17,7 @@ interface cartProps {
 export function Cart({ setShowCart }: cartProps) {
   const { cartItems, setCartItems } = useContext(CartItemContext)
 
-  async function handleCartItems() {
+  async function getCartItems() {
     try {
       const response = await api.get('/cartItems', {
         withCredentials: true,
@@ -29,7 +29,7 @@ export function Cart({ setShowCart }: cartProps) {
   }
 
   useEffect(() => {
-    handleCartItems()
+    getCartItems()
   }, [])
 
   return (
@@ -46,6 +46,7 @@ export function Cart({ setShowCart }: cartProps) {
             title={item.product.name}
             price={item.product.price}
             image={item.product.image}
+            quantity={item.quantity}
           />
         ))}
       </div>

@@ -8,7 +8,7 @@ import { api } from '../../../../lib/api'
 
 export function Header() {
   const { user, setUser } = useContext(UserContext)
-  const { cartItems } = useContext(CartItemContext)
+  const { cartItems, setCartItems } = useContext(CartItemContext)
   const [showCart, setShowCart] = useState<boolean>(false)
 
   const navigate = useNavigate()
@@ -35,6 +35,17 @@ export function Header() {
     }
   }
 
+  async function getCartItems() {
+    try {
+      const response = await api.get('/cartItems', {
+        withCredentials: true,
+      })
+      setCartItems(response.data)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   function getNavItemClass(path: string) {
     const baseClass = 'flex p-1 border border-[#F2DAAC] rounded-sm'
 
@@ -44,8 +55,15 @@ export function Header() {
     return `${baseClass} text-[#F2DAAC]`
   }
 
+  let cartQuantity = 0
+
+  for (let i = 0; i < cartItems.length; i++) {
+    cartQuantity += cartItems[i].quantity
+  }
+
   useEffect(() => {
     handleMeSubmit()
+    getCartItems()
   }, [])
 
   return (
@@ -77,7 +95,7 @@ export function Header() {
           <div className="relative text-white cursor-pointer">
             <ShoppingCart onClick={() => setShowCart(!showCart)} />
             <span className="flex absolute -top-3 -right-3 h-4 w-4 items-center justify-center bg-[#F2DAAC] rounded-full text-[#161410] font-bold text-sm">
-              {cartItems.length}
+              {cartQuantity}
             </span>
           </div>
           <div className="flex text-white">
